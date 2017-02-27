@@ -19,6 +19,46 @@ class deliberationGui:
         master.resizable(FALSE, FALSE)
 
 
+        # Sets countdown to 300
+        # Add option to change this variable before game starts
+        # Under countdownFrame
+        self.countdownValue = 300
+
+        # Change this to change height and width of map buttons
+        # Default height = 5, width = 10
+        # Under mapFrame
+        heightSetting = 5
+        widthSetting = 10
+
+        # Sets the name displayed in each map button
+        # Change this later
+        # Buttons can fit 13 characters, but looks better with <= 12
+        mapButtonStr1 = 'filler1'
+        mapButtonStr2 = 'qwertyuiopas'
+        mapButtonStr3 = 'filler3'
+        mapButtonStr4 = 'filler4'
+        mapButtonStr5 = 'qwertyuiopasd'
+        mapButtonStr6 = 'filler6'
+        mapButtonStr7 = 'filler7'
+        mapButtonStr8 = 'qwertyuiopasdf'
+        mapButtonStr9 = 'filler9'
+
+        # Sets total and resources to some arbitrary number
+        # Sets allocations to 0
+        # Will move totalResources and futureResources somewhere else
+        # Under diploFrame
+        self.totalResources = 8
+        self.totalLabelNumber = 0
+        self.offenseAllocation = 0
+        self.defenseAllocation = 0
+        self.deterAllocation = 0
+        self.futureResources = 8
+
+        # Sets up a string variable for the diplomacy frame
+        # Under diploFrame
+        self.diplomacy = StringVar()
+        
+
         # styling goes here
         
 
@@ -51,11 +91,6 @@ class deliberationGui:
         self.endFrame = ttk.Frame(self.mainFrame, borderwidth=5,
                                   relief="sunken")
 
-
-                
-        # Sets countdown to 300
-        # Add option to change this variable before game starts
-        self.countdownValue = 300
         
         # Creates labels under mainframe, displays countdown timer.
         self.timeleftLabel = ttk.Label(self.countdownFrame, text='TIME REMAINING:')
@@ -67,57 +102,52 @@ class deliberationGui:
         # Creates a label for the map
         self.mapLabel = ttk.Label(self.mapFrame, text='MAP OF ZIRKLANDIA')
 
-        # Change this to change height and width of map buttons
-        heightSetting = 4
-        widthSetting = 8
-
         # Creates a ton of buttons for the map        
-        self.mapButton1 = Button(self.mapFrame, text='filler1',
+        self.mapButton1 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr1),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
 
-        self.mapButton2 = Button(self.mapFrame, text='filler2',
+        self.mapButton2 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr2),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
 
-        self.mapButton3 = Button(self.mapFrame, text='filler3',
+        self.mapButton3 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr3),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
 
-        self.mapButton4 = Button(self.mapFrame, text='filler4',
+        self.mapButton4 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr4),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
 
-        self.mapButton5 = Button(self.mapFrame, text='filler5',
+        self.mapButton5 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr5),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
 
-        self.mapButton6 = Button(self.mapFrame, text='filler6',
+        self.mapButton6 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr6),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
 
-        self.mapButton7 = Button(self.mapFrame, text='filler7',
+        self.mapButton7 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr7),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
 
-        self.mapButton8 = Button(self.mapFrame, text='filler8',
+        self.mapButton8 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr8),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
 
-        self.mapButton9 = Button(self.mapFrame, text='filler9',
+        self.mapButton9 = Button(self.mapFrame,
+                                 text=('%s' % mapButtonStr9),
                                  height=('%d' % heightSetting),
                                  width=('%d' % widthSetting))
-
-
-        # Sets total and resources to some arbitrary number
-        # Sets allocations to 0
-        # Will move totalResources and futureResources somewhere else
-        self.totalResources = 8
-        self.totalLabelNumber = 0
-        self.offenseAllocation = 0
-        self.defenseAllocation = 0
-        self.deterAllocation = 0
-        self.futureResources = 8
+        
 
         # Creates a label to tell player their total resources
         self.totalLabel = ttk.Label(self.resourceFrame,
@@ -159,8 +189,6 @@ class deliberationGui:
         # Creates a label for the diplomacy section.
         self.diploLabel = ttk.Label(self.diploFrame,
                                     text = 'You have selected __. Will you...')
-
-        self.diplomacy = StringVar()
         
         self.attackRadio = ttk.Radiobutton(self.diploFrame, variable=self.diplomacy,
                                       value='attack',
@@ -226,7 +254,7 @@ class deliberationGui:
     # Subtracts 1 from countdown, changes label to new integer, waits, repeats
     # Disables countdownButton
     def countdownLoop(self, *args):
-        self.countdownValue -= 1
+        self.countdownValue -= 0
         self.countdownLabel['text'] = '%d' % self.countdownValue
 
         # If countdownValue is 1, move on to the action phase
