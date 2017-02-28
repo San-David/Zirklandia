@@ -14,15 +14,64 @@ from tkinter import font
 
 class deliberationGui:
     def __init__(self, master):
+
+        # Variables START ------------------------------------------------------
+        
+        # Sets countdown to 300
+        # Add option to change this variable before game starts
+        # Under countdownFrame
+        self.countdownValue = 300
+
+        # Change this to change height and width of map buttons
+        # Default height = 5, width = 10
+        # Under mapFrame
+        self.heightSetting = 5
+        self.widthSetting = 10
+
+        # Sets the name displayed in each map button
+        # Change this later
+        # Buttons can fit 13 characters, but looks better with <= 12
+        self.mapButtonStr1 = 'filler1'
+        self.mapButtonStr2 = 'qwertyuiopas'
+        self.mapButtonStr3 = 'filler3'
+        self.mapButtonStr4 = 'filler4'
+        self.mapButtonStr5 = 'qwertyuiopasd'
+        self.mapButtonStr6 = 'filler6'
+        self.mapButtonStr7 = 'filler7'
+        self.mapButtonStr8 = 'qwertyuiopasdf'
+        self.mapButtonStr9 = 'filler9'
+
+        # Sets total and resources to some arbitrary number
+        # Sets allocations to 0
+        # Will move totalResources and futureResources somewhere else
+        # Under diploFrame
+        self.totalResources = 8
+        self.totalLabelNumber = 0
+        self.offenseAllocation = 0
+        self.defenseAllocation = 0
+        self.deterAllocation = 0
+        self.futureResources = 8
+
+        # Sets up a string variable for the diplomacy frame
+        # Under diploFrame
+        self.diplomacy = StringVar()
+
+        # Variables END --------------------------------------------------------
+
+
+        # Styling START --------------------------------------------------------
+
+        # aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+        # Styling END ----------------------------------------------------------
+
+
+        # Frame Setup START ----------------------------------------------------
+
         self.master = master
         master.title("Zirklandia")
         master.resizable(FALSE, FALSE)
-
-
-        # styling goes here
         
-
-
         # Creates a frame called content under master.
         # Gives gui a nice border
         self.content = ttk.Frame(master, padding=5)
@@ -31,31 +80,14 @@ class deliberationGui:
         self.mainFrame = ttk.Frame(self.content, borderwidth=5, relief="raised",
                                    padding=5)
 
+        # Frame Setup END ------------------------------------------------------
+
+
+        # Countdown Section START ----------------------------------------------
+        
         # Creates a frame to hold the countdown button
         self.countdownFrame = ttk.Frame(self.mainFrame, borderwidth=5,
                                         relief="sunken")
-
-        # Creates a frame to hold the map
-        self.mapFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                  relief="sunken")
-
-        # Creates a frame to hold resource inputs
-        self.resourceFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                       relief="sunken")
-
-        # Creates a frame to hold diplomacy options
-        self.diploFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                    relief="sunken")
-
-        # Creates a frame to hold the 'end turn' button
-        self.endFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                  relief="sunken")
-
-
-                
-        # Sets countdown to 300
-        # Add option to change this variable before game starts
-        self.countdownValue = 300
         
         # Creates labels under mainframe, displays countdown timer.
         self.timeleftLabel = ttk.Label(self.countdownFrame, text='TIME REMAINING:')
@@ -63,61 +95,72 @@ class deliberationGui:
         self.countdownLabel = ttk.Label(self.countdownFrame,
                                         text='%d' % self.countdownValue)
 
+        # Countdown Section END ------------------------------------------------
 
+
+        # Map Section START ----------------------------------------------------
+        
+        # Creates a frame to hold the map
+        self.mapFrame = ttk.Frame(self.mainFrame, borderwidth=5,
+                                  relief="sunken")
+        
         # Creates a label for the map
         self.mapLabel = ttk.Label(self.mapFrame, text='MAP OF ZIRKLANDIA')
 
-        # Change this to change height and width of map buttons
-        heightSetting = 4
-        widthSetting = 8
-
         # Creates a ton of buttons for the map        
-        self.mapButton1 = Button(self.mapFrame, text='filler1',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton1 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr1),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
 
-        self.mapButton2 = Button(self.mapFrame, text='filler2',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton2 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr2),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
 
-        self.mapButton3 = Button(self.mapFrame, text='filler3',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton3 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr3),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
 
-        self.mapButton4 = Button(self.mapFrame, text='filler4',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton4 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr4),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
 
-        self.mapButton5 = Button(self.mapFrame, text='filler5',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton5 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr5),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
 
-        self.mapButton6 = Button(self.mapFrame, text='filler6',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton6 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr6),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
 
-        self.mapButton7 = Button(self.mapFrame, text='filler7',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton7 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr7),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
 
-        self.mapButton8 = Button(self.mapFrame, text='filler8',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton8 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr8),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
 
-        self.mapButton9 = Button(self.mapFrame, text='filler9',
-                                 height=('%d' % heightSetting),
-                                 width=('%d' % widthSetting))
+        self.mapButton9 = Button(self.mapFrame,
+                                 text=('%s' % self.mapButtonStr9),
+                                 height=('%d' % self.heightSetting),
+                                 width=('%d' % self.widthSetting))
+
+        # Map Section END ------------------------------------------------------
 
 
-        # Sets total and resources to some arbitrary number
-        # Sets allocations to 0
-        # Will move totalResources and futureResources somewhere else
-        self.totalResources = 8
-        self.totalLabelNumber = 0
-        self.offenseAllocation = 0
-        self.defenseAllocation = 0
-        self.deterAllocation = 0
-        self.futureResources = 8
+        # Resource Section START -----------------------------------------------
+
+        # Creates a frame to hold resource inputs
+        self.resourceFrame = ttk.Frame(self.mainFrame, borderwidth=5,
+                                       relief="sunken")
 
         # Creates a label to tell player their total resources
         self.totalLabel = ttk.Label(self.resourceFrame,
@@ -155,12 +198,18 @@ class deliberationGui:
                                     length=120, from_=0, to=self.totalResources,
                                     command=self.scaleChange)
 
+        # Resource Section END -------------------------------------------------
+
+
+        # Diplomacy Section START ----------------------------------------------
+
+        # Creates a frame to hold diplomacy options
+        self.diploFrame = ttk.Frame(self.mainFrame, borderwidth=5,
+                                    relief="sunken")
 
         # Creates a label for the diplomacy section.
         self.diploLabel = ttk.Label(self.diploFrame,
                                     text = 'You have selected __. Will you...')
-
-        self.diplomacy = StringVar()
         
         self.attackRadio = ttk.Radiobutton(self.diploFrame, variable=self.diplomacy,
                                       value='attack',
@@ -170,14 +219,24 @@ class deliberationGui:
                                         value='alliance',
                                         text='...send them an alliance offer?')
 
+        # Diplomacy Section END ------------------------------------------------
 
+        
+        # End Button START -----------------------------------------------------
+
+        # Creates a frame to hold the 'end turn' button
+        self.endFrame = ttk.Frame(self.mainFrame, borderwidth=5,
+                                  relief="sunken")
+        
         # Creates a button to end your turn
         self.endButton = ttk.Button(self.endFrame, text='End your turn?',
                                     command=self.endTurn)
 
+        # End Button END -------------------------------------------------------
 
+        
+        # Widget Gridding START ------------------------------------------------
 
-        # Every widget is gridded down here.
         self.content.grid(column=0, row=0, sticky=(N, S, E, W))
         self.mainFrame.grid(column=0, row=0, sticky=(N, S, E, W))
 
@@ -219,9 +278,14 @@ class deliberationGui:
         # Column and row configurations go here
         self.countdownFrame.columnconfigure(0, weight=2)
 
+        # Widget Gridding END --------------------------------------------------
+
+
+        # Start the countdown loop
         self.countdownLoop()
 
 
+        # Deliberation Functions START -----------------------------------------
 
     # Subtracts 1 from countdown, changes label to new integer, waits, repeats
     # Disables countdownButton
@@ -271,10 +335,29 @@ class deliberationGui:
             
             self.master.destroy()
 
+    # Deliberation Functions END -----------------------------------------------
+
 
 
 class chatGui:
     def __init__(self, master):
+
+        # Variables START ------------------------------------------------------
+
+
+
+        # Variables END --------------------------------------------------------
+
+
+        # Styling START --------------------------------------------------------
+
+
+
+        # Styling END ----------------------------------------------------------
+
+
+        # Frame Setup START ----------------------------------------------------
+        
         self.master = master
         master.title("Zirklandia")
         master.resizable(FALSE, FALSE)
@@ -287,30 +370,49 @@ class chatGui:
         self.mainFrame = ttk.Frame(self.content, borderwidth=5, relief="raised",
                                    padding=5)
 
+        # Frame Setup END ------------------------------------------------------
+
+
+        # Chat Display START ---------------------------------------------------
+
         # Creates a frame to hold the chat window
         self.chatFrame = ttk.Frame(self.mainFrame, borderwidth=5,
                                    relief="sunken")
+
+
+
+        # Chat Display END -----------------------------------------------------
+
+
+        # Player List START ----------------------------------------------------
 
         # Creates a frame to hold the player list
         self.playerFrame = ttk.Frame(self.mainFrame, borderwidth=5,
                                      relief="sunken")
 
+
+
+        # Player List END ------------------------------------------------------
+
+
+        # Message Entry START --------------------------------------------------
+
         # Creates a frame to hold the message entry and button
         self.messageFrame = ttk.Frame(self.mainFrame, borderwidth=5,
                                       relief="sunken")
-
-
-        
-
 
         # Creates an entry for players to type messages in
         self.message = StringVar()
         self.messageEntry = ttk.Entry(self.messageFrame)
 
+        # Creates a button that sends messageEntry when clicked
         self.messageButton = ttk.Button(self.messageFrame, text="Send")
+
+        # Message Entry END ----------------------------------------------------
         
         
-        # Each widget is gridded down here
+        # Widget Gridding START ------------------------------------------------
+        
         self.content.grid(column=0, row=0, sticky=(N, S, E, W))
         self.mainFrame.grid(column=0, row=0, sticky=(N, S, E, W))
 
@@ -321,14 +423,23 @@ class chatGui:
         self.messageFrame.grid(column=0, row=1, columnspan=2)
         self.messageEntry.grid(column=0, row=0)
         self.messageButton.grid(column=1, row=0)
+
+        # Widget Gridding END --------------------------------------------------
+
+
+        # Chat Functions START -------------------------------------------------
+
+
+
+        # Chat Functions END ---------------------------------------------------
         
 
 
 gameRoot = Tk()
 deliberationGui = deliberationGui(gameRoot)
 
-#chatRoot = Tk()
-#chatGui = chatGui(chatRoot)
+chatRoot = Tk()
+chatGui = chatGui(chatRoot)
 
 gameRoot.mainloop()
-#chatRoot.mainloop()
+chatRoot.mainloop()
