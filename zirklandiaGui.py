@@ -12,6 +12,115 @@ from tkinter import messagebox
 from tkinter import ttk
 from tkinter import font
 
+class chatGui:
+    def __init__(self, master):
+
+        # Variables START ------------------------------------------------------
+        
+        self.chatYPos = 0
+        
+        # Variables END --------------------------------------------------------
+
+
+        # Styling START --------------------------------------------------------
+
+
+
+        # Styling END ----------------------------------------------------------
+
+
+        # Frame Setup START ----------------------------------------------------
+        
+        self.master = master
+        master.title("Zirklandia")
+        master.resizable(FALSE, FALSE)
+
+        # Creates a frame called content under master
+        # Gives a nice border
+        self.content = ttk.Frame(master, padding="5")
+
+        # Creates a main frame to hold all of our other frames. 
+        self.mainFrame = ttk.Frame(self.content, borderwidth=5, relief="raised",
+                                   padding=5)
+
+        # Frame Setup END ------------------------------------------------------
+
+
+        # Chat Display START ---------------------------------------------------
+
+        # Creates a frame to hold the chat window
+        self.chatFrame = ttk.Frame(self.mainFrame, borderwidth=5,
+                                   relief="sunken")
+
+        self.chatCanvas = Canvas(self.chatFrame, height=300, width=300)
+
+        # Chat Display END -----------------------------------------------------
+
+
+        # Player List START ----------------------------------------------------
+
+        # Creates a frame to hold the player list
+        self.playerFrame = ttk.Frame(self.mainFrame, borderwidth=5,
+                                     relief="sunken")
+
+        self.playerCanvas = Canvas(self.playerFrame, height=300, width=100)
+
+        # Player List END ------------------------------------------------------
+
+
+        # Message Entry START --------------------------------------------------
+
+        # Creates a frame to hold the message entry and button
+        self.messageFrame = ttk.Frame(self.mainFrame, borderwidth=5,
+                                      relief="sunken")
+
+        # Creates an entry for players to type messages in
+        self.message = StringVar()
+        self.messageEntry = ttk.Entry(self.messageFrame,
+                                      width = 56,
+                                      textvariable=self.message)
+
+        # Creates a button that sends messageEntry when clicked
+        self.messageButton = ttk.Button(self.messageFrame, text="Send",
+                                        command=self.getMessage)
+
+        # Message Entry END ----------------------------------------------------
+        
+        
+        # Widget Gridding START ------------------------------------------------
+        
+        self.content.grid(column=0, row=0, sticky=(N, S, E, W))
+        self.mainFrame.grid(column=0, row=0, sticky=(N, S, E, W))
+
+        self.chatFrame.grid(column=0, row=0)
+        self.chatCanvas.grid(column=0, row=0)
+        
+        self.playerFrame.grid(column=1, row=0)
+        self.playerCanvas.grid(column=0, row=0)
+        
+        self.messageFrame.grid(column=0, row=1, columnspan=2)
+        self.messageEntry.grid(column=0, row=0)
+        self.messageButton.grid(column=1, row=0)
+
+        # Widget Gridding END --------------------------------------------------
+
+
+        # Chat Functions START -------------------------------------------------
+    def getMessage(self, *args):
+        # Gets the message from the entry and sends it to the display
+        self.sentMessage = self.messageEntry.get()
+        self.messageEntry.delete(0, 'end')
+        self.sentMessage = "Troxelus: " + self.sentMessage
+        print(self.sentMessage)
+
+        self.chatCanvas.create_text((3, self.chatYPos), anchor=NW, width=300,
+                                    text='%s' % self.sentMessage)
+        self.chatYPos += 15
+
+        # Chat Functions END ---------------------------------------------------
+
+
+
 class deliberationGui:
     def __init__(self, master):
 
@@ -290,7 +399,7 @@ class deliberationGui:
     # Subtracts 1 from countdown, changes label to new integer, waits, repeats
     # Disables countdownButton
     def countdownLoop(self, *args):
-        self.countdownValue -= 0
+        self.countdownValue -= 1
         self.countdownLabel['text'] = '%d' % self.countdownValue
 
         # If countdownValue is 1, move on to the action phase
@@ -336,102 +445,6 @@ class deliberationGui:
             self.master.destroy()
 
     # Deliberation Functions END -----------------------------------------------
-
-
-
-class chatGui:
-    def __init__(self, master):
-
-        # Variables START ------------------------------------------------------
-
-
-
-        # Variables END --------------------------------------------------------
-
-
-        # Styling START --------------------------------------------------------
-
-
-
-        # Styling END ----------------------------------------------------------
-
-
-        # Frame Setup START ----------------------------------------------------
-        
-        self.master = master
-        master.title("Zirklandia")
-        master.resizable(FALSE, FALSE)
-
-        # Creates a frame called content under master
-        # Gives a nice border
-        self.content = ttk.Frame(master, padding="5")
-
-        # Creates a main frame to hold all of our other frames. 
-        self.mainFrame = ttk.Frame(self.content, borderwidth=5, relief="raised",
-                                   padding=5)
-
-        # Frame Setup END ------------------------------------------------------
-
-
-        # Chat Display START ---------------------------------------------------
-
-        # Creates a frame to hold the chat window
-        self.chatFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                   relief="sunken")
-
-
-
-        # Chat Display END -----------------------------------------------------
-
-
-        # Player List START ----------------------------------------------------
-
-        # Creates a frame to hold the player list
-        self.playerFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                     relief="sunken")
-
-
-
-        # Player List END ------------------------------------------------------
-
-
-        # Message Entry START --------------------------------------------------
-
-        # Creates a frame to hold the message entry and button
-        self.messageFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                      relief="sunken")
-
-        # Creates an entry for players to type messages in
-        self.message = StringVar()
-        self.messageEntry = ttk.Entry(self.messageFrame)
-
-        # Creates a button that sends messageEntry when clicked
-        self.messageButton = ttk.Button(self.messageFrame, text="Send")
-
-        # Message Entry END ----------------------------------------------------
-        
-        
-        # Widget Gridding START ------------------------------------------------
-        
-        self.content.grid(column=0, row=0, sticky=(N, S, E, W))
-        self.mainFrame.grid(column=0, row=0, sticky=(N, S, E, W))
-
-        self.chatFrame.grid(column=0, row=0)
-        
-        self.playerFrame.grid(column=1, row=0)
-        
-        self.messageFrame.grid(column=0, row=1, columnspan=2)
-        self.messageEntry.grid(column=0, row=0)
-        self.messageButton.grid(column=1, row=0)
-
-        # Widget Gridding END --------------------------------------------------
-
-
-        # Chat Functions START -------------------------------------------------
-
-
-
-        # Chat Functions END ---------------------------------------------------
         
 
 
