@@ -290,7 +290,7 @@ class deliberationGui:
     # Subtracts 1 from countdown, changes label to new integer, waits, repeats
     # Disables countdownButton
     def countdownLoop(self, *args):
-        self.countdownValue -= 1
+        self.countdownValue -= 0
         self.countdownLabel['text'] = '%d' % self.countdownValue
 
         # If countdownValue is 1, move on to the action phase
