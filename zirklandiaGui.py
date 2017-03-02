@@ -17,7 +17,7 @@ class chatGui:
 
         # Variables START ------------------------------------------------------
         
-        self.chatYPos = 0
+
         
         # Variables END --------------------------------------------------------
 
@@ -52,7 +52,7 @@ class chatGui:
         self.chatFrame = ttk.Frame(self.mainFrame, borderwidth=5,
                                    relief="sunken")
 
-        self.chatCanvas = Canvas(self.chatFrame, height=300, width=300)
+        self.chatText = Text(self.chatFrame, height=20, width=40)
 
         # Chat Display END -----------------------------------------------------
 
@@ -63,7 +63,7 @@ class chatGui:
         self.playerFrame = ttk.Frame(self.mainFrame, borderwidth=5,
                                      relief="sunken")
 
-        self.playerCanvas = Canvas(self.playerFrame, height=300, width=100)
+        self.playerText = Text(self.playerFrame, height=20, width=14)
 
         # Player List END ------------------------------------------------------
 
@@ -77,12 +77,15 @@ class chatGui:
         # Creates an entry for players to type messages in
         self.message = StringVar()
         self.messageEntry = ttk.Entry(self.messageFrame,
-                                      width = 56,
+                                      width = 62,
                                       textvariable=self.message)
+        # If Enter / Return is pressed when entry is selected, uses getMessage
+        self.messageEntry.bind('<Return>', self.getMessage)
 
-        # Creates a button that sends messageEntry when clicked
-        self.messageButton = ttk.Button(self.messageFrame, text="Send",
-                                        command=self.getMessage)
+        # Creates a button that uses getMessage
+        # If left-mouse button is used to click button, uses getMessage
+        self.messageButton = ttk.Button(self.messageFrame, text="Send")
+        self.messageButton.bind('<Button-1>', self.getMessage)
 
         # Message Entry END ----------------------------------------------------
         
@@ -93,10 +96,10 @@ class chatGui:
         self.mainFrame.grid(column=0, row=0, sticky=(N, S, E, W))
 
         self.chatFrame.grid(column=0, row=0)
-        self.chatCanvas.grid(column=0, row=0)
+        self.chatText.grid(column=0, row=0)
         
         self.playerFrame.grid(column=1, row=0)
-        self.playerCanvas.grid(column=0, row=0)
+        self.playerText.grid(column=0, row=0)
         
         self.messageFrame.grid(column=0, row=1, columnspan=2)
         self.messageEntry.grid(column=0, row=0)
@@ -113,9 +116,7 @@ class chatGui:
         self.sentMessage = "Troxelus: " + self.sentMessage
         print(self.sentMessage)
 
-        self.chatCanvas.create_text((3, self.chatYPos), anchor=NW, width=300,
-                                    text='%s' % self.sentMessage)
-        self.chatYPos += 15
+        #self.chatText.something something something
 
         # Chat Functions END ---------------------------------------------------
 
