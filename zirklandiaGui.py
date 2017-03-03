@@ -17,7 +17,7 @@ class chatGui:
 
         # Variables START ------------------------------------------------------
         
-        self.chatYPos = 0
+        self.chatIndex = str(1.0)
         
         # Variables END --------------------------------------------------------
 
@@ -50,9 +50,16 @@ class chatGui:
 
         # Creates a frame to hold the chat window
         self.chatFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                   relief="sunken")
+                                   relief='sunken')
 
-        self.chatCanvas = Canvas(self.chatFrame, height=300, width=300)
+        # Displays chat messages
+        self.chatText = Text(self.chatFrame, state='disabled',
+                             wrap=WORD, height=20, width=36)
+
+        # Scrollbar for chatText
+        self.chatScrollbar = ttk.Scrollbar(self.chatFrame, orient=VERTICAL,
+                                           command=self.chatText.yview)
+        self.chatText['yscrollcommand'] = self.chatScrollbar.set
 
         # Chat Display END -----------------------------------------------------
 
@@ -61,9 +68,16 @@ class chatGui:
 
         # Creates a frame to hold the player list
         self.playerFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                     relief="sunken")
+                                     relief='sunken')
 
-        self.playerCanvas = Canvas(self.playerFrame, height=300, width=100)
+        # Displays player list
+        self.playerText = Text(self.playerFrame, state='disabled',
+                               height=20, width=14)
+
+        # Scrollbar for playerText
+        self.playerScrollbar = ttk.Scrollbar(self.playerFrame, orient=VERTICAL,
+                                             command=self.playerText.yview)
+        self.playerText['yscrollcommand'] = self.chatScrollbar.set
 
         # Player List END ------------------------------------------------------
 
@@ -72,17 +86,20 @@ class chatGui:
 
         # Creates a frame to hold the message entry and button
         self.messageFrame = ttk.Frame(self.mainFrame, borderwidth=5,
-                                      relief="sunken")
+                                      relief='sunken')
 
         # Creates an entry for players to type messages in
         self.message = StringVar()
         self.messageEntry = ttk.Entry(self.messageFrame,
-                                      width = 56,
+                                      width = 62,
                                       textvariable=self.message)
+        # If Enter / Return is pressed when entry is selected, uses getMessage
+        self.messageEntry.bind('<Return>', self.getMessage)
 
-        # Creates a button that sends messageEntry when clicked
-        self.messageButton = ttk.Button(self.messageFrame, text="Send",
-                                        command=self.getMessage)
+        # Creates a button that uses getMessage
+        # If left-mouse button is used to click button, uses getMessage
+        self.messageButton = ttk.Button(self.messageFrame, text="Send")
+        self.messageButton.bind('<Button-1>', self.getMessage)
 
         # Message Entry END ----------------------------------------------------
         
@@ -93,10 +110,12 @@ class chatGui:
         self.mainFrame.grid(column=0, row=0, sticky=(N, S, E, W))
 
         self.chatFrame.grid(column=0, row=0)
-        self.chatCanvas.grid(column=0, row=0)
+        self.chatText.grid(column=0, row=0)
+        self.chatScrollbar.grid(column=1, row=0, sticky='NSE')
         
         self.playerFrame.grid(column=1, row=0)
-        self.playerCanvas.grid(column=0, row=0)
+        self.playerText.grid(column=0, row=0)
+        self.playerScrollbar.grid(column=1, row=0, sticky='NSE')
         
         self.messageFrame.grid(column=0, row=1, columnspan=2)
         self.messageEntry.grid(column=0, row=0)
@@ -106,16 +125,20 @@ class chatGui:
 
 
         # Chat Functions START -------------------------------------------------
+        
     def getMessage(self, *args):
         # Gets the message from the entry and sends it to the display
         self.sentMessage = self.messageEntry.get()
         self.messageEntry.delete(0, 'end')
-        self.sentMessage = "Troxelus: " + self.sentMessage
+        self.sentMessage = "Troxelus: " + self.sentMessage + '\n'
         print(self.sentMessage)
 
-        self.chatCanvas.create_text((3, self.chatYPos), anchor=NW, width=300,
-                                    text='%s' % self.sentMessage)
-        self.chatYPos += 15
+        self.chatText['state'] = 'normal'
+        self.chatText.insert('%s' % self.chatIndex, self.sentMessage)
+        self.chatIndex = self.chatText.index('end')
+        print(self.chatIndex)
+        self.chatText['state'] = 'disabled'
+        self.chatText.see('end')
 
         # Chat Functions END ---------------------------------------------------
 
