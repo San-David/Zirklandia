@@ -8,9 +8,7 @@
 # make countdown variable configurable
 
 from tkinter import *
-from tkinter import messagebox
-from tkinter import ttk
-from tkinter import font
+from tkinter import messagebox, font, ttk
 
 class chatGui:
     def __init__(self, master):
